@@ -15,12 +15,9 @@ module.exports = function (app) {
 
   app.route('/api/issues/:project')
   
-    .get(controller.getIssues (req, res))
+    .get(controller.getIssue)
     
-    .post(function (req, res){
-      let project = req.params.project;
-      
-    })
+    .post(controller.postIssue)
     
     .put(function (req, res){
       let project = req.params.project;

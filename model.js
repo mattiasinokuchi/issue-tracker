@@ -27,7 +27,7 @@ const schema = new mongoose.Schema({
 });
 
 // Define model (class) for MongoDB documents
-const DatabaseModel = mongoose.model("DatabaseModel", schema);
+const Database = mongoose.model("DatabaseModel", schema);
 
 // Make model available from controller.js
-module.exports = DatabaseModel;
+module.exports = Database;
