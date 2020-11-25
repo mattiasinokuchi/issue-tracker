@@ -37,12 +37,28 @@ suite('Functional Tests', function() {
         done();
       });
     });
-    /*
-    test('Required fields filled in, Optional Fields Blank', function(done) {
-      
-      //done();
-    });
     
+    test('Required fields filled in, Optional Fields Blank', function(done) {
+      chai.request(server)
+      .post('/api/issues/test')
+      .send({
+        issue_title: 'Title',
+        issue_text: 'text',
+        created_by: 'Functional Test - Required fields filled in, Optional Fields Blank',
+        assigned_to: '',
+        status_text: ''
+      })
+      .end(function(err, res){
+        assert.equal(res.status, 200);
+        assert.equal(res.body.title, 'Title');
+        assert.equal(res.body.text, 'text');
+        assert.equal(res.body.by, 'Functional Test - Required fields filled in, Optional Fields Blank');
+        assert.equal(res.body.to, '');
+        assert.equal(res.body.status, '');
+        done();
+      });
+    });
+    /*
     test('Missing required fields => { error: "required field(s) missing" }', function(done) {
 
       //done();
