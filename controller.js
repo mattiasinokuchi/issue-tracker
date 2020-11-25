@@ -22,7 +22,6 @@ module.exports = {
   postIssue: async (req, res) => {
     try {
       // ...creates a document...
-      console.log(req.body);
       let document = new Database({
         title: req.body.issue_title,
         text: req.body.issue_text,
@@ -34,8 +33,7 @@ module.exports = {
       });
       // ...saves it in the database...
       const doc = await document.save();
-      // ...and returns some data
-      console.log(doc._id);
+      // ...and returns data
       res.json({
         title: doc.title,
         text: doc.text,

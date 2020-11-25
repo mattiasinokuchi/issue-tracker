@@ -29,13 +29,15 @@ suite('Functional Tests', function() {
       })
       .end(function(err, res){
         assert.equal(res.status, 200);
-        
-        //fill me in too!
-        
-        //done();
+        assert.equal(res.body.title, 'Title');
+        assert.equal(res.body.text, 'text');
+        assert.equal(res.body.by, 'Functional Test - Every field filled in');
+        assert.equal(res.body.to, 'Chai and Mocha');
+        assert.equal(res.body.status, 'In QA');
+        done();
       });
     });
-    
+    /*
     test('Required fields filled in, Optional Fields Blank', function(done) {
       
       //done();
@@ -127,6 +129,6 @@ suite('Functional Tests', function() {
     test('No _id => { error: "missing _id" }', function(done) {
 
       //done();
-    });
+    });*/
   });
 });
