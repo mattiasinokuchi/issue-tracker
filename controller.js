@@ -25,11 +25,9 @@ module.exports = {
       let document = new Database({
         title: req.body.issue_title,
         text: req.body.issue_text,
-        created: new Date(),
         by: req.body.created_by,
         to: req.body.assigned_to,
         status: req.body.status_text,
-        updated: new Date()
       });
       // ...saves it in the database...
       const doc = await document.save();
@@ -45,7 +43,8 @@ module.exports = {
         _id: doc._id
       });
     } catch (error) {
-      console.log(error);
+      res.json({ error: "required field(s) missing" });
+      console.log('Error: DatabaseModel validation failed: title: missing field', error);
     }
   }
 }

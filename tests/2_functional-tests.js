@@ -58,16 +58,29 @@ suite('Functional Tests', function() {
         done();
       });
     });
-    /*
-    test('Missing required fields => { error: "required field(s) missing" }', function(done) {
-
-      //done();
-    });
     
+    test('Missing required fields => { error: "required field(s) missing" }', function(done) {
+      chai.request(server)
+      .post('/api/issues/test')
+      .send({
+        issue_title: '',
+        issue_text: '',
+        created_by: '',
+        assigned_to: '',
+        status_text: ''
+      })
+      .end(function(err, res){
+        let input = { error: "required field(s) missing" };
+        console.log(res.body, typeof(res.body), input, typeof(input));
+        assert.equal(res.status, 200);
+        assert.deepEqual(res.body, input);
+        done();
+      });
+    });    
   });
 
   suite('GET /api/issues/{project}', function() {
-    
+/*    
     test('No filter', function(done) {
       chai.request(server)
       .get('/api/issues/test')

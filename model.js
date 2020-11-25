@@ -17,13 +17,13 @@ mongoose.connection.once('open', function() {
 
 // Define schema (constructor) for MongoDB documents
 const schema = new mongoose.Schema({
-  title: String,
+  title: { type: String, required: [true, 'missing field'] },
   text: String,
-  created: Date,
+  created: { type: Date, default: new Date() },
   by: String,
   to: String,
   status: String,
-  updated: Date
+  updated: { type: Date, default: new Date() }
 });
 
 // Define model (class) for MongoDB documents
