@@ -10,9 +10,8 @@ mongoose.connect(process.env.uri, {
 });
 
 // Get notified if database connects successfully or not
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+mongoose.connection.once('open', function() {
   console.log('Connected to database');
 });
 
