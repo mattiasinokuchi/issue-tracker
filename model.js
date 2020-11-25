@@ -20,9 +20,11 @@ db.once('open', function() {
 const schema = new mongoose.Schema({
   title: String,
   text: String,
+  created: Date,
   by: String,
   to: String,
-  status: String
+  status: String,
+  updated: Date
 });
 
 // Define model (class) for MongoDB documents
