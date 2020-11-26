@@ -11,8 +11,10 @@ module.exports = {
     try {
       // ...finds all documents in database... 
       let doc = await Document.find();
+      // ...filters the array...
+      let log = filter(doc, req.query.open);
       // ...then returns the data
-      res.json(doc);
+      res.json(log);
     } catch(error) {
       console.log(error);
     }
@@ -49,4 +51,12 @@ module.exports = {
       }
     }
   }
+}
+
+// Function for filter documents...
+function filter(doc, query) {
+  return doc.filter(function(el) {
+    console.log(el.open, query, typeof(el.open), typeof(query));
+    return el.open.toString() == query;
+  });
 }
