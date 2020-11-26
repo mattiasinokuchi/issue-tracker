@@ -17,17 +17,18 @@ mongoose.connection.once('open', function() {
 
 // Define schema (constructor) for MongoDB documents
 const schema = new mongoose.Schema({
-  title: { type: String, required: [true, 'missing field'] },
-  text: String,
-  created: { type: Date, default: new Date() },
-  by: String,
-  to: String,
-  status: String,
-  updated: { type: Date, default: new Date() }
+  issue_title: { type: String, required: [true, 'missing field'] },
+  issue_text: String,
+  created_on: { type: Date, default: new Date() },
+  created_by: String,
+  assigned_to: String,
+  status_text: String,
+  updated_on: { type: Date, default: new Date() },
+  open: { type: Boolean, default: true }
 });
 
 // Define model (class) for MongoDB documents
-const Database = mongoose.model("DatabaseModel", schema);
+const Document = mongoose.model("Collection", schema);
 
 // Make model available from controller.js
-module.exports = Database;
+module.exports = Document;

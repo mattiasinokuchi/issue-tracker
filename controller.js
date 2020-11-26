@@ -1,7 +1,7 @@
 // This file contains logic that updates data and view
 
 // Import data model
-const Database = require('./model');
+const Document = require('./model');
 
 // Make controller functions available from router
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
   getIssue: async (req, res) => {
     try {
       // ...finds all documents in database... 
-      let doc = await Database.find();
+      let doc = await Document.find();
       // ...then returns the data
       res.json(doc);
     } catch(error) {
@@ -22,24 +22,24 @@ module.exports = {
   postIssue: async (req, res) => {
     try {
       // ...creates a document...
-      let document = new Database({
-        title: req.body.issue_title,
-        text: req.body.issue_text,
-        by: req.body.created_by,
-        to: req.body.assigned_to,
-        status: req.body.status_text,
+      let document = new Document({
+        issue_title: req.body.issue_title,
+        issue_text: req.body.issue_text,
+        created_by: req.body.created_by,
+        assigned_to: req.body.assigned_to,
+        status_text: req.body.status_text,
       });
       // ...saves it in the database...
       const doc = await document.save();
       // ...returns data...
       res.json({
-        title: doc.title,
-        text: doc.text,
-        created: doc.created,
-        by: doc.by,
-        to: doc.to,
-        status: doc.status,
-        updated: doc.updated,
+        issue_title: doc.issue_title,
+        issue_text: doc.issue_text,
+        created_on: doc.created_on,
+        created_by: doc.created_by,
+        assigned_to: doc.assigned_to,
+        status_text: doc.status_text,
+        updated_on: doc.updated_on,
         _id: doc._id
       });
     } catch (error) {

@@ -29,11 +29,11 @@ suite('Functional Tests', function() {
       })
       .end(function(err, res){
         assert.equal(res.status, 200);
-        assert.equal(res.body.title, 'Title');
-        assert.equal(res.body.text, 'text');
-        assert.equal(res.body.by, 'Functional Test - Every field filled in');
-        assert.equal(res.body.to, 'Chai and Mocha');
-        assert.equal(res.body.status, 'In QA');
+        assert.equal(res.body.issue_title, 'Title');
+        assert.equal(res.body.issue_text, 'text');
+        assert.equal(res.body.created_by, 'Functional Test - Every field filled in');
+        assert.equal(res.body.assigned_to, 'Chai and Mocha');
+        assert.equal(res.body.status_text, 'In QA');
         done();
       });
     });
@@ -50,11 +50,11 @@ suite('Functional Tests', function() {
       })
       .end(function(err, res){
         assert.equal(res.status, 200);
-        assert.equal(res.body.title, 'Title');
-        assert.equal(res.body.text, 'text');
-        assert.equal(res.body.by, 'Functional Test - Required fields filled in, Optional Fields Blank');
-        assert.equal(res.body.to, '');
-        assert.equal(res.body.status, '');
+        assert.equal(res.body.issue_title, 'Title');
+        assert.equal(res.body.issue_text, 'text');
+        assert.equal(res.body.created_by, 'Functional Test - Required fields filled in, Optional Fields Blank');
+        assert.equal(res.body.assigned_to, '');
+        assert.equal(res.body.status_text, '');
         done();
       });
     });
@@ -70,16 +70,15 @@ suite('Functional Tests', function() {
         status_text: ''
       })
       .end(function(err, res){
-        let input = { error: "required field(s) missing" };
         assert.equal(res.status, 200);
-        assert.deepEqual(res.body, input);
+        assert.deepEqual(res.body, { error: "required field(s) missing" });
         done();
       });
     });    
   });
 
   suite('GET /api/issues/{project}', function() {
-/*    
+    
     test('No filter', function(done) {
       chai.request(server)
       .get('/api/issues/test')
@@ -99,7 +98,7 @@ suite('Functional Tests', function() {
         done();
       });
     });
-    
+    /*
     test('One filter', function(done) {
       
       //done();
