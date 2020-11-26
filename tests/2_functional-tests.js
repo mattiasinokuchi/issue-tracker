@@ -122,16 +122,32 @@ suite('Functional Tests', function() {
         done();
       });
     });
-    /*
+  
   });
   
   suite('PUT /api/issues/{project}', function() {
           
     test('One field to update => {result: "successfully updated", _id: _id}', function(done) {
-      
-      //done();
+      chai.request(server)
+      .put('/api/issues/test')
+      .send({
+        issue_title: 'Title',
+        issue_text: 'text',
+        created_by: 'Functional Test - Required fields filled in, Optional Fields Blank',
+        assigned_to: '',
+        status_text: ''
+      })
+      .end(function(err, res){
+        assert.equal(res.status, 200);
+        assert.equal(res.body.issue_title, 'Title');
+        assert.equal(res.body.issue_text, 'text');
+        assert.equal(res.body.created_by, 'Functional Test - Required fields filled in, Optional Fields Blank');
+        assert.equal(res.body.assigned_to, '');
+        assert.equal(res.body.status_text, '');
+        done();
+      });
     });
-    
+  /*  
     test('Multiple fields to update => {result: "successfully updated", _id: _id}', function(done) {
       
       //done();

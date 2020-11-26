@@ -6,20 +6,8 @@ const Document = require('./model');
 // Make controller functions available from router
 module.exports = {
 
-  // Handler for reading issues...
-  getIssue: async (req, res) => {
-    try {
-      // ...finds requested documents in database... 
-      let doc = await Document.find(req.query);
-      // ...and returns the data
-      res.json(doc);
-    } catch(error) {
-      console.log(error);
-    }
-  },
-
-  // Handler for posting issues...
-  postIssue: async (req, res) => {
+  // Handler for creating issues...
+  createIssue: async (req, res) => {
     try {
       // ...creates a document...
       let document = new Document({
@@ -47,6 +35,30 @@ module.exports = {
       if (error.name == 'ValidationError') {
         res.json({ error: "required field(s) missing" });
       }
+    }
+  },
+
+  // Handler for reading issues...
+  readIssue: async (req, res) => {
+    try {
+      // ...finds requested documents in database... 
+      let doc = await Document.find(req.query);
+      // ...and returns the data
+      res.json(doc);
+    } catch(error) {
+      console.log(error);
+    }
+  },
+
+  // Handler for updating issues...
+  updateIssue: async (req, res) => {
+    try {
+      // ...finds requested documents in database... 
+      let doc = await Document.findByIdAndUpdate(req.query._id, req.query);
+      // ...and returns the data
+      res.json(doc);
+    } catch(error) {
+      console.log(error);
     }
   }
 }

@@ -15,14 +15,11 @@ module.exports = function (app) {
 
   app.route('/api/issues/:project')
   
-    .get(controller.getIssue)
+    .post(controller.createIssue)
     
-    .post(controller.postIssue)
+    .get(controller.readIssue)
     
-    .put(function (req, res){
-      let project = req.params.project;
-      
-    })
+    .put(controller.updateIssue)
     
     .delete(function (req, res){
       let project = req.params.project;
