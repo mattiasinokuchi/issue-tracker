@@ -102,20 +102,27 @@ suite('Functional Tests', function() {
     test('One filter', function(done) {
       chai.request(server)
       .get('/api/issues/test')
-      .query({open: true})
+      .query({_id: '5fbfafcb45505807b26f73f8'})
       .end(function(err, res){
         assert.equal(res.status, 200);
-        assert.isArray(res.body);
+        assert.equal(res.body[0]._id, '5fbfafcb45505807b26f73f8');
+        done();
+      });
+    });
+    
+    test('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
+      chai.request(server)
+      .get('/api/issues/test')
+      .query({open: true, assigned_to: "Chai and Mocha", issue_title: "Title"})
+      .end(function(err, res){
+        assert.equal(res.status, 200);
         assert.equal(res.body[0].open.toString(), 'true');
+        assert.notEqual(res.body[0].assigned_to, "Chai and Coffe");
+        assert.equal(res.body[0].issue_title, 'Title');
         done();
       });
     });
     /*
-    test('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
-      
-      //done();
-    });
-    
   });
   
   suite('PUT /api/issues/{project}', function() {
