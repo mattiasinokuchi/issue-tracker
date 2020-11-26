@@ -71,7 +71,6 @@ suite('Functional Tests', function() {
       })
       .end(function(err, res){
         let input = { error: "required field(s) missing" };
-        console.log(res.body, typeof(res.body), input, typeof(input));
         assert.equal(res.status, 200);
         assert.deepEqual(res.body, input);
         done();

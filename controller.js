@@ -31,7 +31,7 @@ module.exports = {
       });
       // ...saves it in the database...
       const doc = await document.save();
-      // ...and returns data
+      // ...returns data...
       res.json({
         title: doc.title,
         text: doc.text,
@@ -43,8 +43,10 @@ module.exports = {
         _id: doc._id
       });
     } catch (error) {
-      res.json({ error: "required field(s) missing" });
-      console.log('Error: DatabaseModel validation failed: title: missing field', error);
+      // ...or sends error message
+      if (error.name == 'ValidationError') {
+        res.json({ error: "required field(s) missing" });
+      }
     }
   }
 }
