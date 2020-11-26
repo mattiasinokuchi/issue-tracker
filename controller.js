@@ -9,12 +9,10 @@ module.exports = {
   // Handler for reading issues...
   getIssue: async (req, res) => {
     try {
-      // ...finds all documents in database... 
-      let doc = await Document.find();
-      // ...filters the array...
-      let log = filter(doc, req.query.open);
-      // ...then returns the data
-      res.json(log);
+      // ...finds requested documents in database... 
+      let doc = await Document.find(req.query);
+      // ...and returns the data
+      res.json(doc);
     } catch(error) {
       console.log(error);
     }
@@ -51,12 +49,4 @@ module.exports = {
       }
     }
   }
-}
-
-// Function for filter documents...
-function filter(doc, query) {
-  return doc.filter(function(el) {
-    console.log(el.open, query, typeof(el.open), typeof(query));
-    return el.open.toString() == query;
-  });
 }
