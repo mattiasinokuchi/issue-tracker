@@ -104,10 +104,10 @@ suite('Functional Tests', function() {
     test('One filter', function(done) {
       chai.request(server)
       .get('/api/issues/test')
-      .query({ created_by: 'Functional Test - One field to update' })
+      .query({ _id: test_id })
       .end(function(err, res){
         assert.equal(res.status, 200);
-        assert.equal(res.body[0].created_by, 'Functional Test - One field to update');
+        assert.equal(res.body[0]._id, test_id);
         done();
       });
     });
@@ -140,12 +140,22 @@ suite('Functional Tests', function() {
         done();
       });
     });
-  /*  
+    
     test('Multiple fields to update => {result: "successfully updated", _id: _id}', function(done) {
-      
-      //done();
+      chai.request(server)
+      .put('/api/issues/test')
+      .send({ _id: test_id,
+        issue_title: 'It is getting better!',
+        issue_text: 'Run for it!',
+        assigned_to: 'Everyone!'
+      })
+      .end(function(err, res){
+        assert.equal(res.status, 200);
+        assert.deepEqual(res.body, { result: 'successfully updated', _id: test_id });
+        done();
+      });
     });
-
+/*
     test('No _id submitted => { error: "missing _id" }', function(done) {
 
       //done()
