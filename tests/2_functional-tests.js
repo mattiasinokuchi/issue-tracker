@@ -10,6 +10,7 @@ const chaiHttp = require('chai-http');
 const chai = require('chai');
 const assert = chai.assert;
 const server = require('../server');
+const Document = require('../model');
 
 chai.use(chaiHttp);
 
@@ -125,28 +126,32 @@ suite('Functional Tests', function() {
   
   });
   
-  suite('PUT /api/issues/{project}', function() {
-          
-    test('One field to update => {result: "successfully updated", _id: _id}', function(done) {
-      chai.request(server)
-      .put('/api/issues/test')
-      .send({
+  suite('PUT /api/issues/{project}', async function() {
+    try {
+
+      let testIssue = new Document({
         issue_title: 'Title',
         issue_text: 'text',
-        created_by: 'Functional Test - Required fields filled in, Optional Fields Blank',
-        assigned_to: '',
-        status_text: ''
-      })
-      .end(function(err, res){
-        assert.equal(res.status, 200);
-        assert.equal(res.body.issue_title, 'Title');
-        assert.equal(res.body.issue_text, 'text');
-        assert.equal(res.body.created_by, 'Functional Test - Required fields filled in, Optional Fields Blank');
-        assert.equal(res.body.assigned_to, '');
-        assert.equal(res.body.status_text, '');
-        done();
+        created_by: 'Functional Test - One field to update'
       });
-    });
+      await testIssue.save();
+      console.log('testIssue: ', testIssue._id);
+
+      test('One field to update => {result: "successfully updated", _id: _id}', function(done) {
+        chai.request(server)
+        .put('/api/issues/test'+testIssue._id)
+        .send({
+          status_text: 'One field updated'
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.deepEqual(res.body, { result: 'successfully updated', '_id': testIssue._id });
+          done();
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   /*  
     test('Multiple fields to update => {result: "successfully updated", _id: _id}', function(done) {
       

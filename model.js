@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
   created_on: { type: Date, default: new Date() },
   created_by: String,
   assigned_to: String,
-  status_text: String,
+  status_text: { type: String, default: ''},
   updated_on: { type: Date, default: new Date() },
   open: { type: Boolean, default: true }
 });
