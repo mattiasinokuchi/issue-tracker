@@ -6,7 +6,8 @@ const mongoose = require('mongoose')
 // Connect and set up database
 mongoose.connect(process.env.uri, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 // Get notified if database connects successfully or not
@@ -18,11 +19,11 @@ mongoose.connection.once('open', function() {
 // Define schema (constructor) for MongoDB documents
 const schema = new mongoose.Schema({
   issue_title: { type: String, required: [true, 'missing field'] },
-  issue_text: String,
+  issue_text: { type: String, required: [true, 'missing field'] },
   created_on: { type: Date, default: new Date() },
-  created_by: String,
-  assigned_to: String,
-  status_text: { type: String, default: ''},
+  created_by: { type: String, required: [true, 'missing field'] },
+  assigned_to: { type: String, default: '' },
+  status_text: { type: String, default: '' },
   updated_on: { type: Date, default: new Date() },
   open: { type: Boolean, default: true }
 });

@@ -10,7 +10,7 @@ const chaiHttp = require('chai-http');
 const chai = require('chai');
 const assert = chai.assert;
 const server = require('../server');
-const Document = require('../model');
+let test_id = null;
 
 chai.use(chaiHttp);
 
@@ -29,6 +29,7 @@ suite('Functional Tests', function() {
         status_text: 'In QA'
       })
       .end(function(err, res){
+        test_id = res.body._id;
         assert.equal(res.status, 200);
         assert.equal(res.body.issue_title, 'Title');
         assert.equal(res.body.issue_text, 'text');
@@ -103,10 +104,10 @@ suite('Functional Tests', function() {
     test('One filter', function(done) {
       chai.request(server)
       .get('/api/issues/test')
-      .query({_id: '5fbfafcb45505807b26f73f8'})
+      .query({ created_by: 'Functional Test - One field to update' })
       .end(function(err, res){
         assert.equal(res.status, 200);
-        assert.equal(res.body[0]._id, '5fbfafcb45505807b26f73f8');
+        assert.equal(res.body[0].created_by, 'Functional Test - One field to update');
         done();
       });
     });
@@ -114,7 +115,7 @@ suite('Functional Tests', function() {
     test('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
       chai.request(server)
       .get('/api/issues/test')
-      .query({open: true, assigned_to: "Chai and Mocha", issue_title: "Title"})
+      .query({ open: true, assigned_to: "Chai and Mocha", issue_title: "Title" })
       .end(function(err, res){
         assert.equal(res.status, 200);
         assert.equal(res.body[0].open.toString(), 'true');
@@ -126,32 +127,19 @@ suite('Functional Tests', function() {
   
   });
   
-  suite('PUT /api/issues/{project}', async function() {
-    try {
-
-      let testIssue = new Document({
-        issue_title: 'Title',
-        issue_text: 'text',
-        created_by: 'Functional Test - One field to update'
+  suite('PUT /api/issues/{project}', function() {
+    test('One field to update => {result: "successfully updated", _id: _id}', function(done) {
+      chai.request(server)
+      .put('/api/issues/test')
+      .send({ _id: test_id,
+        status_text: 'One field updated'
+      })
+      .end(function(err, res){
+        assert.equal(res.status, 200);
+        assert.deepEqual(res.body, { result: 'successfully updated', _id: test_id });
+        done();
       });
-      await testIssue.save();
-      console.log('testIssue: ', testIssue._id);
-
-      test('One field to update => {result: "successfully updated", _id: _id}', function(done) {
-        chai.request(server)
-        .put('/api/issues/test'+testIssue._id)
-        .send({
-          status_text: 'One field updated'
-        })
-        .end(function(err, res){
-          assert.equal(res.status, 200);
-          assert.deepEqual(res.body, { result: 'successfully updated', '_id': testIssue._id });
-          done();
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    });
   /*  
     test('Multiple fields to update => {result: "successfully updated", _id: _id}', function(done) {
       

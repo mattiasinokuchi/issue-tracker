@@ -53,10 +53,10 @@ module.exports = {
   // Handler for updating issues...
   updateIssue: async (req, res) => {
     try {
-      // ...finds requested documents in database... 
-      let doc = await Document.findByIdAndUpdate(req.query._id, req.query);
-      // ...and returns the data
-      res.json(doc);
+      // ...finds requested documents in database...
+      let doc = await Document.findByIdAndUpdate(req.body._id, req.body);
+      // ...and returns a message
+      res.json({ "result": "successfully updated", "_id": doc._id });
     } catch(error) {
       console.log(error);
     }
