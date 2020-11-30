@@ -34,6 +34,8 @@ module.exports = {
       // ...or sends error message
       if (error.name == 'ValidationError') {
         res.json({ error: "required field(s) missing" });
+      } else {
+        console.log(error);
       }
     }
   },
@@ -58,7 +60,12 @@ module.exports = {
       // ...and returns a message
       res.json({ "result": "successfully updated", "_id": doc._id });
     } catch(error) {
-      console.log(error);
+      // ...or sends error message
+      if (error.name == 'CastError') {
+        res.json({ error: "missing _id" });
+      } else {
+        console.log(error);
+      }
     }
   }
 }

@@ -155,12 +155,20 @@ suite('Functional Tests', function() {
         done();
       });
     });
-/*
+
     test('No _id submitted => { error: "missing _id" }', function(done) {
-
-      //done()
+      chai.request(server)
+      .put('/api/issues/test')
+      .send({ _id: '',
+        issue_title: 'Undefined'
+      })
+      .end(function(err, res){
+        assert.equal(res.status, 200);
+        assert.deepEqual(res.body, { error: "missing _id" });
+        done();
+      });
     });
-
+/*
     test('No fields to update => { error: "no update field(s) sent", _id: _id }', function(done) {
       
       //done()
