@@ -55,14 +55,20 @@ module.exports = {
   // Handler for updating issues...
   updateIssue: async (req, res) => {
     try {
+      // check for missing update fields...
+      if (Object.keys(req.body).length < 2) {
+        throw 'missing update field(s)';
+      }
       // ...finds requested documents in database...
       let doc = await Document.findByIdAndUpdate(req.body._id, req.body);
       // ...and returns a message
-      res.json({ "result": "successfully updated", "_id": doc._id });
+      res.json({ 'result': 'successfully updated', '_id': doc._id });
     } catch(error) {
       // ...or sends error message
       if (error.name == 'CastError') {
-        res.json({ error: "missing _id" });
+        res.json({ error: 'missing _id' });
+      } else if (error == 'missing update field(s)') {
+        res.json({ error: 'no update field(s) sent', _id: req.body._id });
       } else {
         console.log(error);
       }

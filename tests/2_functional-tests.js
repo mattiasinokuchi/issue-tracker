@@ -168,12 +168,18 @@ suite('Functional Tests', function() {
         done();
       });
     });
-/*
-    test('No fields to update => { error: "no update field(s) sent", _id: _id }', function(done) {
-      
-      //done()
-    });
 
+    test('No fields to update => { error: "no update field(s) sent", _id: _id }', function(done) {
+      chai.request(server)
+      .put('/api/issues/test')
+      .send({ _id: test_id })
+      .end(function(err, res){
+        assert.equal(res.status, 200);
+        assert.deepEqual(res.body, { error: "no update field(s) sent", _id: test_id });
+        done();
+      });
+    });
+/*
     test('Invalid _id => { error: "missing _id" }', function(done) {
       
       //done();
