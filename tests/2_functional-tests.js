@@ -179,14 +179,22 @@ suite('Functional Tests', function() {
         done();
       });
     });
-/*
+
     test('Invalid _id => { error: "missing _id" }', function(done) {
-      
-      //done();
+      chai.request(server)
+      .put('/api/issues/test')
+      .send({ _id: 'invalid',
+        issue_title: 'undefined'
+      })
+      .end(function(err, res){
+        assert.equal(res.status, 200);
+        assert.deepEqual(res.body, { error: "missing _id" });
+        done();
+      });
     });
-    
+/*    
   });
-   
+
   
   suite('DELETE /api/issues/{project}', function() {
 
