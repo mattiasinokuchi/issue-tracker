@@ -21,9 +21,6 @@ module.exports = function (app) {
     
     .put(controller.updateIssue)
     
-    .delete(function (req, res){
-      let project = req.params.project;
-      
-    });
+    .delete(controller.deleteIssue);
     
 };

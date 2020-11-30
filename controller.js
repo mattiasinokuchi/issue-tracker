@@ -73,5 +73,18 @@ module.exports = {
         console.log(error);
       }
     }
+  },
+
+  // Handler for deleting issues...
+  deleteIssue: async (req, res) => {
+    try {
+      console.log(req.body);
+      // ...finds and deletes requested document in database... 
+      let doc = await Document.findByIdAndDelete(req.body._id, req.body);
+      // ...and returns message
+      res.json( { result: 'successfully deleted', '_id': doc._id } );
+    } catch(error) {
+      console.log(error);
+    }
   }
 }
