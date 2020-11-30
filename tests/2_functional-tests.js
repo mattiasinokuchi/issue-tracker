@@ -209,13 +209,18 @@ suite('Functional Tests', function() {
       });
     });
 
-    /*
     test('Invalid _id => { error: "could not delete", "_id": _id }', function(done) {
       const badId = "5f665eb46e296f6b9b6a504d";
-      
-      //done();
+      chai.request(server)
+      .delete('/api/issues/test')
+      .send({ _id: badId })
+      .end(function(err, res){
+        assert.equal(res.status, 200);
+        assert.deepEqual(res.body, { error: "could not delete", "_id": badId });
+        done();
+      });
     });
-    
+    /*
     test('No _id => { error: "missing _id" }', function(done) {
 
       //done();

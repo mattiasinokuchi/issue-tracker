@@ -81,9 +81,15 @@ module.exports = {
       console.log(req.body);
       // ...finds and deletes requested document in database... 
       let doc = await Document.findByIdAndDelete(req.body._id, req.body);
-      // ...and returns message
+      // ...checks for invalid id...
+      if (!doc) throw 'invalid id';
+      // ...returns message...
       res.json( { result: 'successfully deleted', '_id': doc._id } );
     } catch(error) {
+      // ...or error message
+      if (error == 'invalid id') {
+        res.json({ error: "could not delete", "_id": req.body._id });
+      }
       console.log(error);
     }
   }
