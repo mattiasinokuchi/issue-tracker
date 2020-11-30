@@ -128,6 +128,7 @@ suite('Functional Tests', function() {
   });
   
   suite('PUT /api/issues/{project}', function() {
+    
     test('One field to update => {result: "successfully updated", _id: _id}', function(done) {
       chai.request(server)
       .put('/api/issues/test')
