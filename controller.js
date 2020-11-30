@@ -78,7 +78,6 @@ module.exports = {
   // Handler for deleting issues...
   deleteIssue: async (req, res) => {
     try {
-      console.log(req.body);
       // ...finds and deletes requested document in database... 
       let doc = await Document.findByIdAndDelete(req.body._id, req.body);
       // ...checks for invalid id...
@@ -87,10 +86,13 @@ module.exports = {
       res.json( { result: 'successfully deleted', '_id': doc._id } );
     } catch(error) {
       // ...or error message
-      if (error == 'invalid id') {
+      if (error.name == 'CastError') {
+        res.json({ error: "missing _id" });
+      } else if (error == 'invalid id') {
         res.json({ error: "could not delete", "_id": req.body._id });
+      } else {
+        console.log(error);
       }
-      console.log(error);
     }
   }
 }
