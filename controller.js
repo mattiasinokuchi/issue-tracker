@@ -16,6 +16,8 @@ module.exports = {
         issue_title: req.body.issue_title,
         issue_text: req.body.issue_text,
         created_by: req.body.created_by,
+        created_on: new Date(),
+        updated_on: new Date()
       });
       // ...saves it in the database...
       const doc = await document.save();
@@ -56,16 +58,19 @@ module.exports = {
   // Handler for updating issues...
   updateIssue: async (req, res) => {
     try {
+      let request = req.body;
       // ...checks for missing update fields...
-      if (Object.keys(req.body).length < 2) {
+      if (Object.keys(request).length < 2) {
         throw 'missing update field(s)';
       }
-      // ...searchs for requested documents in database...
-      let doc = await Document.findByIdAndUpdate(req.body._id, req.body);
+      // ...adds new date/time for updated_on to request...
+      request.updated_on = new Date();
+      // ...searches and updates requested documents in database...
+      let doc = await Document.findByIdAndUpdate(req.body._id, request);
       // ...checks if document is found...
       if (!doc) throw 'invalid id';
       // ...returns a message...
-      res.json({ 'result': 'successfully updated', '_id': doc._id });
+      res.json({ result: 'successfully updated', '_id': doc._id });
     } catch(error) {
       // ...or sends error message
       if (error.name == 'CastError') {

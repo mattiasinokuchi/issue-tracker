@@ -18,14 +18,36 @@ mongoose.connection.once('open', function() {
 
 // Define schema (constructor) for MongoDB documents
 const schema = new mongoose.Schema({
-  assigned_to: { type: String, default: '' },
-  status_text: { type: String, default: '' },
-  open: { type: Boolean, default: true },
-  issue_title: { type: String, required: [true, 'missing field'] },
-  issue_text: { type: String, required: [true, 'missing field'] },
-  created_by: { type: String, required: [true, 'missing field'] },
-  created_on: { type: Date, default: new Date() },
-  updated_on: { type: Date, default: new Date() } 
+  assigned_to: {
+    type: String,
+    default: ''
+  },
+  status_text: {
+    type: String,
+    default: ''
+  },
+  open: {
+    type: Boolean,
+    default: true
+  },
+  issue_title: {
+    type: String,
+    required: [true, 'missing field']
+  },
+  issue_text: {
+    type: String,
+    required: [true, 'missing field']
+  },
+  created_by: {
+    type: String,
+    required: [true, 'missing field']
+  },
+  created_on: {
+    type: Date
+  },
+  updated_on: {
+    type: Date
+  } 
 }, { versionKey: false });
 
 // Define model (class) for MongoDB documents
