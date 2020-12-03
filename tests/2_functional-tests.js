@@ -116,7 +116,7 @@ suite('Functional Tests', function() {
       chai.request(server)
       .get('/api/issues/test')
       .query({ open: true, assigned_to: "Chai and Mocha", issue_title: "Title" })
-      .end(function(err, res){
+      .end(function(err, res) {
         assert.equal(res.status, 200);
         assert.equal(res.body[0].open.toString(), 'true');
         assert.notEqual(res.body[0].assigned_to, "Chai and Coffe");

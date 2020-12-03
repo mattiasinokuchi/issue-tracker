@@ -51,7 +51,12 @@ module.exports = {
       // ...and returns the data
       res.json(doc);
     } catch(error) {
-      console.log(error);
+      // ...or sends error message
+      if (error.name == 'CastError') {
+        res.json({ error: 'missing _id' });
+      } else {
+        console.log(error);
+      }
     }
   },
 
